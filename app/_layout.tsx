@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import { ErrorBoundary } from "./error-boundary";
 
 export const unstable_settings = {
@@ -38,6 +38,7 @@ export default function RootLayout() {
 
   return (
     <ErrorBoundary>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <RootLayoutNav />
     </ErrorBoundary>
   );
@@ -45,9 +46,41 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <Stack>
+    <Stack screenOptions={{
+      headerStyle: {
+        backgroundColor: '#121212',
+      },
+      headerTintColor: '#FFFFFF',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      contentStyle: {
+        backgroundColor: '#121212',
+      }
+    }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+      <Stack.Screen name="auth" options={{ headerShown: false }} />
+      <Stack.Screen 
+        name="quiz/[id]" 
+        options={{ 
+          headerShown: false,
+          animation: 'fade',
+        }} 
+      />
+      <Stack.Screen 
+        name="quiz/waiting-room" 
+        options={{ 
+          title: "Waiting Room",
+          animation: 'slide_from_right',
+        }} 
+      />
+      <Stack.Screen 
+        name="quiz/results/[id]" 
+        options={{ 
+          title: "Quiz Results",
+          animation: 'slide_from_right',
+        }} 
+      />
     </Stack>
   );
 }
